@@ -6,5 +6,6 @@ This project is not meant to become a fully featured fluid physic simulation. Ne
 It is just a prototype to help figuring out what steps have to be calculatet to make a fluid physics simulation like that happening.
 And also to see how a simulation build this way reacts in certain situations. 
 
+Protofs runs in [LÖVE](https://love2d.org/wiki/Main_Page).  
 The final project will be complety rewritten in C++.
 
