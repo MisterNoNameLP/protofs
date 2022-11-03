@@ -1,32 +1,23 @@
 local FluidCell = {}
 
-function FluidCell.new()
-    local self = setmetatable({}, {__index = FluidCell})
+local color = {0, .3, .6}
 
-    _G.protofs.debugInfo.cellCount = _G.protofs.debugInfo.cellCount +1
-    self.id = _G.protofs.debugInfo.cellCount
-
-    self.color = {0, .3, .6}
-
-
-
-
-    return self
-end
+--no contructor needed. object gets constructed in the FluidMatrix.
 
 function FluidCell:update(dt, matrix)
-    --print("fluidCell" .. tostring(self.id) .. ": update")
+    
 end
 
 function FluidCell:draw(posX, posY, offsetX, offsetY, scale, gab)
-    --print("fluidCell" .. tostring(self.id) .. ": draw")
-
     local renderPosX = posX * scale + gab * posX + offsetX
     local renderPosY = posY * scale + gab * posY + offsetY
 
-    self.color[4] = 1 --alpha
+    --print(self.amount)
 
-    love.graphics.setColor(self.color)
+    --color[4] = 1 --alpha
+    color[4] = self.amount * .75 + .25
+
+    love.graphics.setColor(color)
     love.graphics.rectangle("fill", 
         renderPosX, 
         renderPosY,

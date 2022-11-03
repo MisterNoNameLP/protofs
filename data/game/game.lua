@@ -1,23 +1,28 @@
 local game = {}
 local love = love
-local fse, renderer
+local fse, renderer 
+
+local gotError = false
+local frame = 0
 
 function game.init(orgFSE, orgRenderer)
     fse, renderer = orgFSE, orgRenderer
+    print("game init")
+
+
 end
 
-function love.update(dt)
-    if love.keyboard.isDown("r") then
-        loadfile("data/init.lua")()
-    end
-
-    fse.update(dt)
+function game.update(dt)
+    
+    fse.fluidMatrix:setCell(2, 2, fse.fluidMatrix.getNewCell({amount = .2}))
+    fse.fluidMatrix:setCell(3, 2, fse.fluidMatrix.getNewCell({amount = .4}))
+    fse.fluidMatrix:setCell(4, 2, fse.fluidMatrix.getNewCell({amount = .6}))
+    fse.fluidMatrix:setCell(5, 2, fse.fluidMatrix.getNewCell({amount = .8}))
+    fse.fluidMatrix:setCell(6, 2, fse.fluidMatrix.getNewCell({amount = 1}))
 end
 
-function love.draw()
-    renderer.preDraw()
-    fse.draw(-50, -50, 75, 3)
-    renderer.afterDraw()
+function game.draw()
+    
 end
 
 return game
