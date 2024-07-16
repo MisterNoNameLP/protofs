@@ -26,7 +26,7 @@ function FluidCell:update(dt, matrix)
 	
 	if self.y < 10 and self:getPressure() > 0 then
 		local otherCell = global.fse.matrix[global.fse.nextMatrix].matrix[self.x][self.y + 1]
-		local flowRate = .001
+		local flowRate = .01
 		
 		otherCell:setPressure(otherCell:getPressure() + math.min(self:getPressure(), flowRate))
 		self:setPressure(math.max(self:getPressure() - flowRate, 0))
@@ -42,10 +42,15 @@ function FluidCell:draw(posX, posY, offsetX, offsetY, scale, gab)
 	local renderPosX = posX * scale + gab * posX + offsetX
 	local renderPosY = posY * scale + gab * posY + offsetY
 
+	if false then
+		self.color[4] = self.pressure --alpha
+	end
 	
 	
-	self.color[4] = self.pressure * 1000 --alpha
-
+	self.color = {self:getPressure(), 1, 1}
+	
+	
+	
 	love.graphics.setColor(self.color)
 	love.graphics.rectangle("fill", 
 		renderPosX, 

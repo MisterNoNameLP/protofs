@@ -18,7 +18,11 @@ function main.init(orgFSE, orgRenderer)
 end
 
 function love.update(dt)
-	print("Tick:", global.tick)
+	if global.tick % 2 == 0 then
+		print("Tick:", global.tick)
+	else
+		print("Tock:", global.tick)
+	end
 	
 	global.tick = global.tick + 1
 	
