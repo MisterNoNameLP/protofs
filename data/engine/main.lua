@@ -2,8 +2,6 @@ local main = {}
 local love = love
 local fse, renderer
 
-local matrix
-
 local isResetting = true
 
 global.tick = 0
@@ -48,7 +46,7 @@ end
 
 function love.draw()
 	renderer.preDraw()
-	fse.draw(-50, -50, 75, 3)
+	fse.draw(-50, -50, global.conf.squareScale, global.conf.squareGab)
 	renderer.afterDraw()
 end
 

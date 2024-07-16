@@ -9,6 +9,9 @@ _G.protofs.debugInfo = {}
 _G.protofs.debugInfo.cellCount = 0
 
 --init
+print(loadfile("data/gameConf.lua"))
+global.conf = loadfile("data/gameConf.lua")()
+
 print(loadfile("data/engine/classes/Vector.lua"))
 global.Vector = loadfile("data/engine/classes/Vector.lua")()
 
