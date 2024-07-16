@@ -10,7 +10,7 @@ function game.init(orgFSE, orgRenderer)
 	fse, renderer = orgFSE, orgRenderer
 	matrix = fse.fluidMatrix.matrix
 	
-	matrix[5][1]:setPressure(1)
+	matrix[5][2]:setPressure(1)
 	
 	
 end
