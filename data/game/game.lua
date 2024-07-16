@@ -30,7 +30,7 @@ function love.update(dt)
 		fse.update(dt)		
 	end
 	
-	print("Hello Bladi 2")
+	print("Hello Bladi 3")
 	
 end
 
