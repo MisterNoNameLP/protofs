@@ -1,6 +1,6 @@
 local conf = {
 	squareScale = 75,
-	squareGab = 10,
+	squareGab = 5,
 	
 	pressureColorMult = 1,
 	

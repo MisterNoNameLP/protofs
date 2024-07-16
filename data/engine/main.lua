@@ -9,13 +9,15 @@ global.tick = 0
 function main.init(orgFSE, orgRenderer)
 	fse, renderer = orgFSE, orgRenderer
 	
-	fse.matrix[1].matrix[5][1]:setPressure(1)
-	fse.matrix[2].matrix[5][1]:setPressure(1)
-	
+	for c = 1, 10 do
+		fse.matrix[1].matrix[c][1]:setPressure(c * .1)
+		fse.matrix[2].matrix[c][1]:setPressure(c * .1)
+	end
 	
 end
 
 function love.update(dt)
+	
 	if global.tick % 2 == 0 then
 		print("Tick:", global.tick)
 	else

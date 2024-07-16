@@ -26,12 +26,36 @@ function FluidCell:update(dt, matrix)
 	
 	if self.y < 10 and self:getPressure() > 0 then
 		local otherCell = global.fse.matrix[global.fse.nextMatrix].matrix[self.x][self.y + 1]
-		local flowRate = .01
+		local flowRate = .1
 		
-		otherCell:setPressure(otherCell:getPressure() + math.min(self:getPressure(), flowRate))
-		self:setPressure(math.max(self:getPressure() - flowRate, 0))
+		if otherCell:getPressure() < 1 then
+			otherCell:setPressure(otherCell:getPressure() + math.min(self:getPressure(), flowRate))
+			self:setPressure(math.max(self:getPressure() - flowRate, 0))
+		end
+	end
+	
+	if self.y == 10 then
+		local leftCell
+		local rightCell
 		
+		if global.fse.matrix[global.fse.nextMatrix].matrix[self.x - 1] ~= nil then
+			leftCell = global.fse.matrix[global.fse.nextMatrix].matrix[self.x - 1][self.y]
+		end
+		if global.fse.matrix[global.fse.nextMatrix].matrix[self.x + 1] ~= nil then
+			rightCell = global.fse.matrix[global.fse.nextMatrix].matrix[self.x + 1][self.y]
+		end
 		
+		if leftCell ~= nil and self:getPressure() > leftCell:getPressure() then
+			local diff = self:getPressure() - leftCell:getPressure()
+			leftCell:setPressure(leftCell:getPressure() + diff / 2)
+			self:setPressure(self:getPressure() - diff / 2)
+		end
+		if rightCell ~= nil and self:getPressure() > rightCell:getPressure() then
+			local diff = self:getPressure() - rightCell:getPressure()
+			rightCell:setPressure(rightCell:getPressure() + diff / 2)
+			self:setPressure(self:getPressure() - diff / 2)
+		end
+			
 	end
 	
 end
@@ -42,13 +66,13 @@ function FluidCell:draw(posX, posY, offsetX, offsetY, scale, gab)
 	local renderPosX = posX * scale + gab * posX + offsetX
 	local renderPosY = posY * scale + gab * posY + offsetY
 
-	if false then
-		self.color[4] = self.pressure --alpha
+	if self:getPressure() == 0 then
+		self.color = {1, 1, 1, 0}
+	elseif self:getPressure() <= 0.5 then
+		self.color = {self:getPressure() * 2, 1, 0}
+	else
+		self.color = {1, 2 - (self:getPressure() * 2 - .1), 0}
 	end
-	
-	
-	self.color = {self:getPressure(), 1, 1}
-	
 	
 	
 	love.graphics.setColor(self.color)
