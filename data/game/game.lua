@@ -1,55 +1,41 @@
 local game = {}
+local love = love
+local fse, renderer
 
-local gotError = false
-local frame = 0
+local matrix
 
-local lastLerpVector --for cleanup purpose
+local isResetting = true
 
---===== shorts =====--
-local g = love.graphics
-local V = protofs.Vector
-
---===== local vars =====--
-local v1, v2, v3, v4 = V.new({x = 0, y = 0}), V.new({x = 100, y = 100}), V.new({x = 200, y = 200}), V.new({x = 300, y = 300})
-
---===== local functions =====--
-local function lerp(vector1, vector2, t)
-	local v1 = vector1:getAttributes()
-	local v2 = vector2:getAttributes()
-
-	local x = (1 - t) * v1.x + t * v2.x
-	local y = (1 - t) * v1.y + t * v2.y
-
-	if lastLerpVector then
-		lastLerpVector:destroy()
-	end
-
-	lastLerpVector = protofs.Vector.new({x = x, y = y})
-	lastLerpVector:draw(1)
-	return lastLerpVector
-end
-
---===== engine functions =====--
 function game.init(orgFSE, orgRenderer)
-	print("game init")
-end
-
-function game.update(dt)
+	fse, renderer = orgFSE, orgRenderer
+	matrix = fse.fluidMatrix.matrix
+	
+	matrix[5][1]:setPressure(1)
+	
 	
 end
 
-function game.draw()
-	local steps = 10
-	for t = 0, 1, 1 / steps do
-		--local x, y = lerp(v1, v2, t)
-		local point1 = lerp(v1, v2, t)
-		local point2 = lerp(v3, v4, t)
-		local x, y = lerp(point1, point2, t):getPos()
-		
-		g.circle("fill", x, y, 3)
+function love.update(dt)
+	if love.keyboard.isDown("r") and not isResetting then
+		loadfile("data/init.lua")()
+		isResetting = true
 	end
-	lastLerpVector:destroy()
+	if not love.keyboard.isDown("r") then
+		isResetting = false
+	end
+	
+	if love.keyboard.isDown("t") then
+		matrix[5][1]:addForce()
+		
+		fse.update(dt)		
+	end
+	
+end
 
+function love.draw()
+	renderer.preDraw()
+	fse.draw(-50, -50, 75, 3)
+	renderer.afterDraw()
 end
 
 return game
