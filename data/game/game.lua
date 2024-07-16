@@ -30,6 +30,8 @@ function love.update(dt)
 		fse.update(dt)		
 	end
 	
+	print("Hello Bladi")
+	
 end
 
 function love.draw()
