@@ -28,10 +28,8 @@ function FluidCell:update(dt, matrix)
 		local otherCell = global.fse.matrix[global.fse.nextMatrix].matrix[self.x][self.y + 1]
 		local flowRate = .1
 		
-		if otherCell:getPressure() < 1 then
-			otherCell:setPressure(otherCell:getPressure() + math.min(self:getPressure(), flowRate))
-			self:setPressure(math.max(self:getPressure() - flowRate, 0))
-		end
+		otherCell:setPressure(otherCell:getPressure() + math.min(self:getPressure(), flowRate))
+		self:setPressure(math.max(self:getPressure() - flowRate, 0))
 	end
 	
 	if self.y == 10 then
