@@ -1,7 +1,3 @@
---conflict test
---conflict test2
---conflict test333
-
 function love.conf(conf)
 	 --print(love.window.setMode(nil, nil, {resizable = true}))
 	 --conf.window.resizable = true

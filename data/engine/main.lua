@@ -1,4 +1,4 @@
-local game = {}
+local main = {}
 local love = love
 local fse, renderer
 
@@ -6,16 +6,22 @@ local matrix
 
 local isResetting = true
 
-function game.init(orgFSE, orgRenderer)
+global.tick = 0
+
+function main.init(orgFSE, orgRenderer)
 	fse, renderer = orgFSE, orgRenderer
-	matrix = fse.fluidMatrix.matrix
 	
-	matrix[5][2]:setPressure(1)
+	fse.matrix[1].matrix[5][1]:setPressure(1)
+	fse.matrix[2].matrix[5][1]:setPressure(1)
 	
 	
 end
 
 function love.update(dt)
+	print("Tick:", global.tick)
+	
+	global.tick = global.tick + 1
+	
 	if love.keyboard.isDown("r") and not isResetting then
 		loadfile("data/init.lua")()
 		isResetting = true
@@ -27,10 +33,12 @@ function love.update(dt)
 	if love.keyboard.isDown("t") then
 		matrix[5][1]:addForce()
 		
-		fse.update(dt)		
 	end
 	
-	print("Hello Bladi 3")
+	fse.update(dt)
+	
+	print(fse.matrix[1].matrix[5][8]:getPressure())
+	print(fse.matrix[2].matrix[5][8]:getPressure())
 	
 end
 
@@ -40,4 +48,4 @@ function love.draw()
 	renderer.afterDraw()
 end
 
-return game
+return main
