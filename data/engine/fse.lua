@@ -4,11 +4,14 @@ local fse = {
 	
 	nextMatrix = 2,
 	
-	matrix = {},
+	matrices = {},
+	
+	test = "T",
+	
 }
 
 function fse.init(sizeX, sizeY)
-	fse.matrix = {
+	fse.matrices = {
 		loadfile("data/engine/classes/FluidMatrix.lua")().new(
 			sizeX, sizeY, global.loadfile("data/engine/classes/FluidCell.lua")()
 		),
@@ -16,17 +19,19 @@ function fse.init(sizeX, sizeY)
 			sizeX, sizeY, global.loadfile("data/engine/classes/FluidCell.lua")()
 		)
 	}
+	
+	print("REINIT")
 end
 
 function fse.update(dt)	
-	fse.matrix[fse.currentMatrix]:update(dt)
+	fse.matrices[fse.currentMatrix]:update(dt)
 	
-	if fse.currentMatrix + 1 > #fse.matrix then
+	if fse.currentMatrix + 1 > #fse.matrices then
 		fse.currentMatrix = 1
 	else
 		fse.currentMatrix = fse.currentMatrix + 1
 	end
-	if fse.currentMatrix + 1 > #fse.matrix then
+	if fse.currentMatrix + 1 > #fse.matrices then
 		fse.nextMatrix = 1
 	else
 		fse.nextMatrix = fse.currentMatrix + 1
@@ -35,9 +40,9 @@ function fse.update(dt)
 end
 
 function fse.draw(offsetX, offsetY, scale, gab)
-	fse.matrix[fse.currentMatrixRender]:draw(offsetX, offsetY, scale, gab)
+	fse.matrices[fse.currentMatrixRender]:draw(offsetX, offsetY, scale, gab)
 	
-	if fse.currentMatrixRender + 1 > #fse.matrix then
+	if fse.currentMatrixRender + 1 > #fse.matrices then
 		fse.currentMatrixRender = 1
 	else
 		fse.currentMatrixRender = fse.currentMatrixRender + 1
@@ -45,16 +50,16 @@ function fse.draw(offsetX, offsetY, scale, gab)
 end
 
 function fse.getCurrentMatrix()
-	return fse.matrix[fse.currentMatrix]
+	return fse.matrices[fse.currentMatrix]
 end
 function fse.getNextMatrix()
-	return fse.matrix[fse.nextMatrix]
+	return fse.matrices[fse.nextMatrix]
 end
 function fse.getCurrentCell(x, y)
-	return fse.getCurrentMatrix()[x][y]
+	return fse.getCurrentMatrix().matrix[x][y]
 end
 function fse.getNextCell(x, y)
-	return fse.getNextMatrix()[x][y]
+	return fse.getNextMatrix().matrix[x][y]
 end
 
 return fse

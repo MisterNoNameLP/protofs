@@ -14,8 +14,10 @@ _G.protofs.debugInfo = {}
 _G.protofs.debugInfo.cellCount = 0
 
 --init
+global.justInitialized = true
 
 global.ut = loadfile("data/libs/UT.lua")()
+_G.ut = global.ut
 global.conf = loadfile("data/gameConf.lua")()
 global.input = loadfile("data/engine/input.lua")()
 _G.input = global.input
@@ -32,5 +34,8 @@ global.renderer = renderer
 main = loadfile("data/engine/main.lua")()
 main.init(fse, renderer)
 global.main = main
+
+global.game = loadfile("data/game/game.lua")()
+global.game.init()
 
 print("init done")

@@ -1,20 +1,19 @@
 local main = {}
 local love = love
-local fse, renderer
 
 global.tick = 0
 
-function main.init(orgFSE, orgRenderer)
-	fse, renderer = orgFSE, orgRenderer
+function main.init()
 	
 	for c = 1, 10 do
-		fse.matrix[1].matrix[c][1]:setPressure(c * .1)
-		fse.matrix[2].matrix[c][1]:setPressure(c * .1)
+		global.fse.matrices[1].matrix[c][1]:setPressure(c * .1)
+		global.fse.matrices[2].matrix[c][1]:setPressure(c * .1)
 	end
 	
 end
 
 function love.update(dt)
+	global.justInitialized = false
 	global.tick = global.tick + 1
 	
 	if global.tick % 2 == 0 then
@@ -23,22 +22,21 @@ function love.update(dt)
 		--print("Tock:", global.tick)
 	end
 	
-	if input.keyPressed("r") then
-		loadfile("data/init.lua")()
-		isResetting = true
-	end
 	
 	
-	
-	fse.update(dt)
-
-	
+	global.fse.update(dt)
+	global.game.update(dt)
 end
 
 function love.draw()
-	renderer.preDraw()
-	fse.draw(-50, -50, global.conf.squareScale, global.conf.squareGab)
-	renderer.afterDraw()
+	if global.justInitialized then
+		return 
+	end
+	
+	global.renderer.preDraw()
+	global.fse.draw(-50, -50, global.conf.squareScale, global.conf.squareGab)
+	global.renderer.afterDraw()
+	global.game.draw()
 end
 
 return main
