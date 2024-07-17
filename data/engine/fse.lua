@@ -8,14 +8,12 @@ local fse = {
 }
 
 function fse.init(sizeX, sizeY)
-	print(loadfile("data/engine/classes/FluidMatrix.lua"))
-	print(loadfile("data/engine/classes/FluidCell.lua"))
 	fse.matrix = {
 		loadfile("data/engine/classes/FluidMatrix.lua")().new(
-			sizeX, sizeY, loadfile("data/engine/classes/FluidCell.lua")()
+			sizeX, sizeY, global.loadfile("data/engine/classes/FluidCell.lua")()
 		),
 		loadfile("data/engine/classes/FluidMatrix.lua")().new(
-			sizeX, sizeY, loadfile("data/engine/classes/FluidCell.lua")()
+			sizeX, sizeY, global.loadfile("data/engine/classes/FluidCell.lua")()
 		)
 	}
 end

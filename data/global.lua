@@ -1,6 +1,6 @@
 local global = {}
 
-function global.loadFile(path)
+function global.loadfile(path)
 	local func, err = loadfile(path)
 	if func == nil then
 		print("Could not load file")
