@@ -71,7 +71,6 @@ function FluidCell:draw(posX, posY, offsetX, offsetY, scale, gab)
 		end
 	end
 		
-	
 	love.graphics.setColor(self.color)
 	love.graphics.rectangle("fill", 
 		renderPosX, 

@@ -18,9 +18,7 @@ function fse.init(sizeX, sizeY)
 	}
 end
 
-function fse.update(dt)
-	
-	
+function fse.update(dt)	
 	fse.matrix[fse.currentMatrix]:update(dt)
 	
 	if fse.currentMatrix + 1 > #fse.matrix then
@@ -44,6 +42,19 @@ function fse.draw(offsetX, offsetY, scale, gab)
 	else
 		fse.currentMatrixRender = fse.currentMatrixRender + 1
 	end
+end
+
+function fse.getCurrentMatrix()
+	return fse.matrix[fse.currentMatrix]
+end
+function fse.getNextMatrix()
+	return fse.matrix[fse.nextMatrix]
+end
+function fse.getCurrentCell(x, y)
+	return fse.getCurrentMatrix()[x][y]
+end
+function fse.getNextCell(x, y)
+	return fse.getNextMatrix()[x][y]
 end
 
 return fse

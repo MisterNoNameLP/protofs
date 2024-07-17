@@ -2,8 +2,6 @@ local main = {}
 local love = love
 local fse, renderer
 
-local isResetting = true
-
 global.tick = 0
 
 function main.init(orgFSE, orgRenderer)
@@ -17,32 +15,23 @@ function main.init(orgFSE, orgRenderer)
 end
 
 function love.update(dt)
-	
-	if global.tick % 2 == 0 then
-		print("Tick:", global.tick)
-	else
-		print("Tock:", global.tick)
-	end
-	
 	global.tick = global.tick + 1
 	
-	if love.keyboard.isDown("r") and not isResetting then
+	if global.tick % 2 == 0 then
+		--print("Tick:", global.tick)
+	else
+		--print("Tock:", global.tick)
+	end
+	
+	if input.keyPressed("r") then
 		loadfile("data/init.lua")()
 		isResetting = true
 	end
-	if not love.keyboard.isDown("r") then
-		isResetting = false
-	end
 	
-	if love.keyboard.isDown("t") then
-		matrix[5][1]:addForce()
-		
-	end
+	
 	
 	fse.update(dt)
-	
-	print(fse.matrix[1].matrix[5][8]:getPressure())
-	print(fse.matrix[2].matrix[5][8]:getPressure())
+
 	
 end
 

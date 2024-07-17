@@ -15,8 +15,10 @@ _G.protofs.debugInfo.cellCount = 0
 
 --init
 
+global.ut = loadfile("data/libs/UT.lua")()
 global.conf = loadfile("data/gameConf.lua")()
-
+global.input = loadfile("data/engine/input.lua")()
+_G.input = global.input
 global.Vector = loadfile("data/engine/classes/Vector.lua")()
 
 fse = loadfile("data/engine/fse.lua")()
