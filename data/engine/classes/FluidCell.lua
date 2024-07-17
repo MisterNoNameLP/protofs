@@ -22,17 +22,15 @@ end
 function FluidCell:update(dt, matrix)
 	--print("fluidCell" .. tostring(self.id) .. ": update")
 	
-	
-	
 	if self.y < 10 and self:getPressure() > 0 then
 		local otherCell = global.fse.matrix[global.fse.nextMatrix].matrix[self.x][self.y + 1]
-		local flowRate = .1
+		local flowRate = .0
 		
 		otherCell:setPressure(otherCell:getPressure() + math.min(self:getPressure(), flowRate))
 		self:setPressure(math.max(self:getPressure() - flowRate, 0))
 	end
 	
-	if self.y == 10 then
+	if self.y == 11 then
 		local leftCell
 		local rightCell
 		
@@ -59,19 +57,20 @@ function FluidCell:update(dt, matrix)
 end
 
 function FluidCell:draw(posX, posY, offsetX, offsetY, scale, gab)
-	--print("fluidCell" .. tostring(self.id) .. ": draw")
-
 	local renderPosX = posX * scale + gab * posX + offsetX
 	local renderPosY = posY * scale + gab * posY + offsetY
-
-	if self:getPressure() == 0 then
-		self.color = {1, 1, 1, 0}
-	elseif self:getPressure() <= 0.5 then
-		self.color = {self:getPressure() * 2, 1, 0}
-	else
-		self.color = {1, 2 - (self:getPressure() * 2 - .1), 0}
-	end
 	
+	do --pressure overlay
+		local colorMult = math.max(global.conf.pressureOverlayColorMult, global.conf.pressureOverlayColorMult)
+		if self:getPressure() == 0 then
+			self.color = {1, 1, 1, 0}
+		elseif self:getPressure() <= 0.5 / colorMult then
+			self.color = {self:getPressure() * 2 * colorMult, 1, 0}
+		else
+			self.color = {1, 2 - (self:getPressure() * 2 - .1 / colorMult) * colorMult, 0}
+		end
+	end
+		
 	
 	love.graphics.setColor(self.color)
 	love.graphics.rectangle("fill", 
