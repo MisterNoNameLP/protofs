@@ -4,7 +4,7 @@ local love = love
 global.tick = 0
 
 function main.init()
-	
+
 	for c = 1, 10 do
 		global.fse.matrices[1].matrix[c][1]:setPressure(c * .1)
 		global.fse.matrices[2].matrix[c][1]:setPressure(c * .1)

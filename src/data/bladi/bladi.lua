@@ -7,16 +7,9 @@ local bladi = {
 	dyn = {}, 
 }
 
---[[
-	sets the default terminal prefix for all logging functions in this file.
-	
-	the 'nil, nil, 1' part is needed to work around an edge-case scenario caused by the initalisation process and not necessary usually.
-]]
-debug.setFuncPrefix("[BLADI]", nil, nil, 1)
-
 function bladi.init()
 	--set the logging prefix inside the 'bladi.init' function.
-	debug.setFuncPrefix("[INIT]") 
+	debug.setFuncPrefix("[BLADI][INIT]") 
 	
 	--do some logging
 	debug.log("##### BLADI INIT START #####")
@@ -53,7 +46,7 @@ function bladi.init()
 end
 
 function bladi.update(dt)
-	debug.setFuncPrefix("[UPDATE]")
+	debug.setFuncPrefix("[BLADI][UPDATE]")
 	
 	--print when the 'B' key is pressed or released
 	if input.keyPressed("b") then
@@ -69,7 +62,7 @@ function bladi.update(dt)
 end
 
 function bladi.draw(dt)
-	debug.setFuncPrefix("[UPDATE]")
+	debug.setFuncPrefix("[BLADI][DRAW]")
 	
 end
 
